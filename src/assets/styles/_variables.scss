@@ -1,0 +1,23 @@
+/* Palette (NYC) */
+$color-primary: #f3c614; /* taxi yellow */
+$color-primary-contrast: #0b1020;
+$color-bg: #0b1020; /* midnight blue */
+$color-surface: #10172a;
+$color-text: #e6e9f2;
+$color-muted: #9aa3b2;
+
+/* Typography */
+$font-sans: system-ui, -apple-system, "Segoe UI", roboto, "Helvetica Neue",
+  arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+/* Spacing */
+$sp-2: 0.5rem;
+$sp-3: 0.75rem;
+$sp-4: 1rem;
+$sp-6: 1.5rem;
+$sp-8: 2rem;
+$sp-12: 3rem;
+
+/* Breakpoints */
+$bp-md: 768px;
+$bp-lg: 1024px;

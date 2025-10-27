@@ -1,0 +1,367 @@
+/* Bring variables into scope (no prefixes needed) */
+@use "../variables" as *;
+
+/* --- tiny Sass helpers (PEC requires a custom function) --- */
+@function tone($color, $alpha: 0.14) {
+  @return rgba($color, $alpha);
+}
+
+@function fluid($min, $max) {
+  @return clamp(#{$min}, 1.5vw + 0.5rem, #{$max});
+}
+
+/* --- Base / reset (minimal) --- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: $color-bg;
+  font-family: $font-sans;
+  line-height: 1.6;
+  color: $color-text;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+.hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  white-space: nowrap;
+  clip-path: inset(50%);
+  overflow: hidden;
+}
+.container {
+  margin: auto;
+  max-width: 90%;
+}
+.skiplink {
+  position: absolute;
+  left: -9999px;
+}
+
+.skiplink:focus {
+  top: 1rem;
+  left: 1rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  background: #fff;
+  color: #000;
+}
+
+/* --- Header & Nav --- */
+.header {
+  background: $color-surface;
+  border-bottom: 1px solid tone($color-text, 0.08);
+
+  &__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: $sp-4;
+    width: min(1100px, 92vw);
+    padding: $sp-4 1rem;
+    margin-inline: auto;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 1.25rem;
+  }
+}
+
+.nav-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid tone($color-text, 0.2);
+  border-radius: 0.5rem;
+  background: transparent;
+  color: $color-text;
+}
+
+.nav {
+  &__list {
+    display: flex;
+    gap: $sp-4;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__link {
+    padding: $sp-2 $sp-3;
+    border-radius: 0.5rem;
+    color: $color-text;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+      background: tone($color-text, 0.08);
+    }
+  }
+}
+
+@media (min-width: $bp-md) {
+  .nav-toggle {
+    display: none;
+  }
+}
+
+@media (max-width: $bp-md) {
+  .nav {
+    display: none;
+  }
+
+  .nav.nav--open {
+    display: block;
+  }
+  .header {
+    position: relative;
+  }
+
+  .nav__list {
+    flex-direction: column;
+    padding-block: $sp-4;
+  }
+  .nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: $color-surface;
+    border-top: 1px solid tone($color-text, 0.1);
+    padding: $sp-4 16px;
+    z-index: 10;
+  }
+}
+
+/* --- Sections --- */
+.section {
+  padding-block: $sp-12;
+}
+
+.section--hero {
+  background: radial-gradient(
+      60% 60% at 70% 20%,
+      tone(#60a5fa, 0.35) 0%,
+      transparent 60%
+    ),
+    radial-gradient(40% 40% at 20% 60%, tone(#f472b6, 0.25) 0%, transparent 60%);
+}
+
+.section--alt {
+  background: linear-gradient(180deg, tone(#fff, 0.04), transparent 40%);
+}
+
+.section__title {
+  margin: 0 0 $sp-4;
+}
+
+.section__intro {
+  margin: 0 0 $sp-4;
+  color: $color-muted;
+}
+
+/* --- Hero --- */
+.hero__inner {
+  display: grid;
+  align-items: center;
+  gap: $sp-8;
+  width: min(1100px, 92vw);
+  margin-inline: auto;
+}
+
+.hero__title {
+  margin-bottom: $sp-4;
+  font-size: fluid(2rem, 3rem);
+}
+
+.hero__figure img {
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px tone(#000, 0.45);
+}
+
+@media (min-width: $bp-lg) {
+  .hero__inner {
+    grid-template-columns: 1.1fr 0.9fr;
+  }
+}
+
+/* --- Buttons --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  text-decoration: none;
+
+  &--primary {
+    background: $color-primary;
+    color: $color-primary-contrast;
+  }
+}
+
+/* --- Cards grid --- */
+.cards {
+  display: grid;
+  gap: $sp-6;
+  grid-template-columns: repeat(auto-fit, minmax(254px, 1fr));
+  margin-inline: auto;
+}
+
+.card {
+  border: 1px solid tone($color-text, 0.08);
+  border-radius: 1rem;
+  background: $color-surface;
+  overflow: hidden;
+
+  &__media {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+
+  &__body {
+    padding: $sp-4;
+  }
+
+  &__title {
+    margin: 0 0 $sp-2;
+    font-size: 1.125rem;
+  }
+
+  &__text {
+    margin: 0;
+    color: $color-muted;
+  }
+}
+
+/* --- Chips --- */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $sp-3;
+  margin: 0 0 $sp-6;
+  padding: 0;
+  list-style: none;
+}
+
+.chip {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid tone($color-primary, 0.5);
+  border-radius: 999px;
+  background: tone($color-primary, 0.25);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: $color-text;
+}
+
+/* --- List blocks --- */
+.list {
+  display: grid;
+  gap: $sp-4;
+}
+
+.list__item {
+  padding: $sp-4;
+  border: 1px solid tone($color-text, 0.08);
+  border-radius: 0.75rem;
+  background: $color-surface;
+}
+
+.list__title {
+  margin: 0 0 0.25rem;
+  font-size: 1.05rem;
+}
+
+.list__desc {
+  margin: 0;
+  color: $color-muted;
+}
+
+/* --- Tips --- */
+.tips {
+  display: grid;
+  gap: $sp-4;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  margin-inline: auto;
+  width: 100%;
+}
+
+.tip {
+  display: grid;
+  align-items: start;
+  gap: $sp-3;
+  grid-template-columns: 2.25rem 1fr;
+  padding: $sp-4;
+  border: 1px solid tone($color-text, 0.08);
+  border-radius: 0.75rem;
+  background: $color-surface;
+}
+
+.tip__icon {
+  margin-top: 0.25rem;
+  font-size: 1.25rem;
+  color: $color-primary;
+}
+
+/* --- Map --- */
+.map iframe {
+  width: 100%;
+  height: 360px;
+  border: 0;
+  border-radius: 0.75rem;
+  box-shadow: 0 8px 24px tone(#000, 0.4);
+}
+
+.map__alt {
+  margin-top: $sp-2;
+  color: $color-muted;
+}
+
+/* --- Footer --- */
+.footer {
+  margin-top: $sp-12;
+  background: $color-surface;
+  border-top: 1px solid tone($color-text, 0.08);
+  padding-block: $sp-6;
+
+  &__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: $sp-4;
+    width: min(1100px, 92vw);
+    margin-inline: auto;
+  }
+}
+
+.social {
+  display: flex;
+  gap: $sp-3;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.social__link {
+  font-size: 1.25rem;
+  color: $color-text;
+}
