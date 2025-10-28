@@ -44,10 +44,12 @@ svg {
   clip-path: inset(50%);
   overflow: hidden;
 }
+
 .container {
-  margin: auto;
   max-width: 90%;
+  margin: auto;
 }
+
 .skiplink {
   position: absolute;
   left: -9999px;
@@ -72,7 +74,6 @@ svg {
     justify-content: space-between;
     align-items: center;
     gap: $sp-4;
-    width: min(1100px, 92vw);
     padding: $sp-4 1rem;
     margin-inline: auto;
   }
@@ -123,13 +124,10 @@ svg {
 }
 
 @media (max-width: $bp-md) {
-  .nav {
-    display: none;
-  }
-
   .nav.nav--open {
     display: block;
   }
+
   .header {
     position: relative;
   }
@@ -138,15 +136,17 @@ svg {
     flex-direction: column;
     padding-block: $sp-4;
   }
+
   .nav {
     position: absolute;
     top: 100%;
-    left: 0;
     right: 0;
+    left: 0;
+    z-index: 10;
+    display: none;
+    padding: $sp-4 16px;
     background: $color-surface;
     border-top: 1px solid tone($color-text, 0.1);
-    padding: $sp-4 16px;
-    z-index: 10;
   }
 }
 
@@ -301,8 +301,8 @@ svg {
   display: grid;
   gap: $sp-4;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  margin-inline: auto;
   width: 100%;
+  margin-inline: auto;
 }
 
 .tip {
